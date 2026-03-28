@@ -81,12 +81,35 @@ export function Stepper({ value, onChange, max, label }) {
 
 export function Slider({ value, onChange, min, max, step, suffix }) {
   const { theme: t } = useTheme();
+  const pct = ((value - min) / (max - min)) * 100;
+  const id = "sl_" + Math.random().toString(36).slice(2, 8);
   return (
     <div style={{ display: "flex", alignItems: "center", gap: "12px", marginTop: "6px" }}>
-      <input type="range" min={min} max={max} step={step || 1} value={value}
-        onChange={e => onChange(+e.target.value)}
-        style={{ flex: 1, background: t.inputBorder, accentColor: t.a }} />
-      <span style={{ fontFamily: "var(--mo)", fontSize: "16px", color: t.a, minWidth: "50px", textAlign: "right" }}>{value}{suffix || ""}</span>
+      <div style={{ flex: 1, position: "relative", height: "36px", display: "flex", alignItems: "center" }}>
+        {/* Track background */}
+        <div style={{ position: "absolute", left: 0, right: 0, height: "6px", borderRadius: "3px", background: t.inputBorder }} />
+        {/* Track filled */}
+        <div style={{ position: "absolute", left: 0, width: pct + "%", height: "6px", borderRadius: "3px", background: t.a, transition: "width 0.1s" }} />
+        {/* Thumb indicator (visual only) */}
+        <div style={{
+          position: "absolute", left: `calc(${pct}% - 10px)`, width: "20px", height: "20px",
+          borderRadius: "50%", background: t.a, border: `3px solid ${t.card}`,
+          boxShadow: `0 0 0 2px ${t.a}, 0 2px 8px rgba(0,0,0,0.3)`,
+          pointerEvents: "none", transition: "left 0.1s",
+        }} />
+        {/* Invisible native input on top for interaction */}
+        <input type="range" min={min} max={max} step={step || 1} value={value}
+          onChange={e => onChange(+e.target.value)}
+          style={{
+            position: "absolute", left: 0, right: 0, width: "100%", height: "36px",
+            opacity: 0, cursor: "pointer", margin: 0, zIndex: 2,
+          }}
+        />
+      </div>
+      <span style={{
+        fontFamily: "var(--mo)", fontSize: "16px", color: t.a, minWidth: "50px", textAlign: "right",
+        fontWeight: 600, background: t.aDim, padding: "4px 10px", borderRadius: "6px",
+      }}>{value}{suffix || ""}</span>
     </div>
   );
 }
