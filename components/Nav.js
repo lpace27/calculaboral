@@ -21,11 +21,22 @@ function Ticker() {
   const [news, setNews] = useState(NEWS_FALLBACK);
 
   useEffect(() => {
-    const RSS_URL = "https://news.google.com/rss/search?q=paritarias+sueldos+monotributo+ganancias+argentina&hl=es-419&gl=AR&ceid=AR:es-419";
+    const RSS_URL = "https://news.google.com/rss/search?q=when:7d+paritarias+OR+sueldos+OR+monotributo+OR+ganancias+OR+ARCA+OR+reforma+laboral+argentina+2026&hl=es-419&gl=AR&ceid=AR:es-419";
     const API = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(RSS_URL);
     fetch(API).then(r => r.json()).then(data => {
       if (data.status === "ok" && data.items && data.items.length > 0) {
-        setNews(data.items.slice(0, 8).map(item => item.title.replace(/ - .+$/, "")));
+        const recientes = data.items
+          .filter(item => {
+            const fecha = new Date(item.pubDate);
+            const haceUnMes = new Date();
+            haceUnMes.setDate(haceUnMes.getDate() - 30);
+            return fecha > haceUnMes;
+          })
+          .slice(0, 8)
+          .map(item => item.title.replace(/ - .+$/, ""));
+        if (recientes.length >= 3) {
+          setNews(recientes);
+        }
       }
     }).catch(() => {});
   }, []);
