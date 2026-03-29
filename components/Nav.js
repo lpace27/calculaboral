@@ -90,7 +90,12 @@ export default function Nav() {
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: "32px" }}>
           <Link href="/" style={{ display: "flex", alignItems: "center", gap: "8px", textDecoration: "none" }}>
-            <span style={{ fontSize: "20px" }}>📊</span>
+            <svg width="24" height="24" viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+              <rect width="32" height="32" rx="6" fill={t.a}/>
+              <rect x="5" y="18" width="5" height="10" rx="1" fill={t.bg}/>
+              <rect x="13" y="12" width="5" height="16" rx="1" fill={t.bg} opacity="0.7"/>
+              <rect x="21" y="6" width="5" height="22" rx="1" fill={t.bg} opacity="0.5"/>
+            </svg>
             <span style={{ fontSize: "16px", fontWeight: 700, color: t.tx, letterSpacing: "-.02em" }}>
               CALCUL<span style={{ color: t.a }}>ABORAL</span>
             </span>
