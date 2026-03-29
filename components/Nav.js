@@ -52,16 +52,16 @@ function Ticker() {
       <div style={{ whiteSpace: "nowrap", animation: "scroll 50s linear infinite", fontSize: "12px", color: t.tickTx, display: "flex", alignItems: "center" }}>
         {items.map((n, i) => (
           <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
-            <span style={{ margin: "0 14px", opacity: 0.3, fontSize: "10px" }}>›</span>
+            <span style={{ margin: "0 14px", color: t.a, fontSize: "14px", fontWeight: 700 }}>›</span>
             {n.link ? (
               <a href={n.link} target="_blank" rel="noopener noreferrer"
                 style={{ color: t.tickTx, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "6px", cursor: "pointer" }}
                 onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
                 onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}>
                 {n.source && (
-                  <span style={{ fontWeight: 700, fontSize: "10px", letterSpacing: ".05em", textTransform: "uppercase", opacity: 0.7 }}>{n.source}</span>
+                  <span style={{ fontWeight: 700, fontSize: "10px", letterSpacing: ".05em", textTransform: "uppercase", color: t.a }}>{n.source}</span>
                 )}
-                <span style={{ opacity: 0.9 }}>{n.title}</span>
+                <span>{n.title}</span>
               </a>
             ) : (
               <span style={{ opacity: 0.9 }}>{n.title}</span>
