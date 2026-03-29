@@ -23,7 +23,7 @@ export default function HomePage() {
           <br />siempre actualizadas.
         </h1>
         <p style={{ fontSize: "15px", color: t.ts, maxWidth: "520px", margin: "0 auto", lineHeight: 1.6 }}>
-          Sin publicidad. Sin registro. Sin vueltas. Herramientas gratuitas para trabajadores, contadores y empleadores argentinos.
+          Herramientas gratuitas para trabajadores, contadores y empleadores argentinos.
         </p>
       </header>
 
