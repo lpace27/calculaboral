@@ -18,7 +18,7 @@ const NAV_LINKS = [
 
 function Ticker() {
   const { theme: t } = useTheme();
-  const [news, setNews] = useState(NEWS_FALLBACK.map(n => ({ title: n, link: null })));
+  const [news, setNews] = useState(NEWS_FALLBACK.map(n => ({ title: n, source: "", link: null })));
 
   useEffect(() => {
     const RSS_URL = "https://news.google.com/rss/search?q=when:7d+paritarias+OR+sueldos+OR+monotributo+OR+ganancias+OR+ARCA+OR+reforma+laboral+argentina+2026&hl=es-419&gl=AR&ceid=AR:es-419";
@@ -33,10 +33,12 @@ function Ticker() {
             return fecha > haceUnMes;
           })
           .slice(0, 8)
-          .map(item => ({
-            title: item.title.replace(/ - .+$/, ""),
-            link: item.link,
-          }));
+          .map(item => {
+            const parts = item.title.split(" - ");
+            const source = parts.length > 1 ? parts.pop().trim() : "";
+            const title = parts.join(" - ").trim();
+            return { title, source, link: item.link };
+          });
         if (recientes.length >= 3) {
           setNews(recientes);
         }
@@ -50,15 +52,19 @@ function Ticker() {
       <div style={{ whiteSpace: "nowrap", animation: "scroll 50s linear infinite", fontSize: "12px", color: t.tickTx, display: "flex", alignItems: "center" }}>
         {items.map((n, i) => (
           <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
-            <span style={{ margin: "0 10px", opacity: 0.5 }}>●</span>
+            <span style={{ margin: "0 14px", opacity: 0.3, fontSize: "10px" }}>›</span>
             {n.link ? (
-              <a href={n.link} target="_blank" rel="noopener noreferrer" style={{ color: t.tickTx, textDecoration: "none", transition: "opacity .2s" }}
-                onMouseEnter={e => e.target.style.opacity = "0.7"}
-                onMouseLeave={e => e.target.style.opacity = "1"}>
-                {n.title}
+              <a href={n.link} target="_blank" rel="noopener noreferrer"
+                style={{ color: t.tickTx, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "6px", cursor: "pointer" }}
+                onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
+                onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}>
+                {n.source && (
+                  <span style={{ fontWeight: 700, fontSize: "10px", letterSpacing: ".05em", textTransform: "uppercase", opacity: 0.7 }}>{n.source}</span>
+                )}
+                <span style={{ opacity: 0.9 }}>{n.title}</span>
               </a>
             ) : (
-              <span>{n.title}</span>
+              <span style={{ opacity: 0.9 }}>{n.title}</span>
             )}
           </span>
         ))}
