@@ -9,6 +9,7 @@ export const metadata = {
   },
   description: 'Sin publicidad. Sin registro. Sin vueltas. Calculadoras gratuitas de sueldo neto, monotributo, vacaciones y liquidación final. Valores actualizados 2026.',
   keywords: ['calculadora sueldo neto', 'sueldo bruto a neto', 'monotributo 2026', 'calculadora vacaciones', 'liquidación final', 'argentina'],
+  icons: { icon: '/icon.svg' },
   openGraph: {
     title: 'CALCULABORAL — Calculadoras laborales argentinas',
     description: 'Herramientas gratuitas para trabajadores, contadores y empleadores argentinos. Valores actualizados al 1er semestre 2026.',
