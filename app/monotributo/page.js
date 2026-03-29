@@ -93,8 +93,11 @@ export default function MonotributoPage() {
                   <>
                     <tr key={c.cat} onClick={() => setDetalle(sel ? null : c.cat)} style={{ color: m ? t.a : t.tx, background: m ? t.aDim : "transparent", cursor: "pointer" }}>
                       <td style={{ padding: "10px 8px", borderBottom: `1px solid ${t.bd}`, fontWeight: m ? 600 : 400, fontSize: "14px" }}>
-                        {c.cat}
-                        {m && <span style={{ display: "inline-block", width: "7px", height: "7px", borderRadius: "50%", background: t.a, marginLeft: "8px", verticalAlign: "middle" }} />}
+                        <span style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}>
+                          <span style={{ color: t.a, fontSize: "12px", fontWeight: 700, transition: "transform .2s", display: "inline-block", transform: sel ? "rotate(90deg)" : "rotate(0deg)" }}>›</span>
+                          {c.cat}
+                          {m && <span style={{ display: "inline-block", width: "7px", height: "7px", borderRadius: "50%", background: t.a, verticalAlign: "middle" }} />}
+                        </span>
                       </td>
                       <td style={{ padding: "10px 8px", borderBottom: `1px solid ${t.bd}`, fontFamily: "var(--mo)" }}>{formatARS(c.ingresos)}</td>
                       <td style={{ padding: "10px 8px", borderBottom: `1px solid ${t.bd}`, fontFamily: "var(--mo)" }}>{formatARS(tipo === "s" ? c.impServ : c.impBien)}</td>
