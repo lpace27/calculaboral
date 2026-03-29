@@ -55,16 +55,16 @@ function Ticker() {
             <span style={{ margin: "0 14px", color: t.a, fontSize: "14px", fontWeight: 700 }}>›</span>
             {n.link ? (
               <a href={n.link} target="_blank" rel="noopener noreferrer"
-                style={{ color: t.tickTx, textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "6px", cursor: "pointer" }}
+                style={{ textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "6px", cursor: "pointer" }}
                 onMouseEnter={e => e.currentTarget.style.textDecoration = "underline"}
                 onMouseLeave={e => e.currentTarget.style.textDecoration = "none"}>
                 {n.source && (
                   <span style={{ fontWeight: 700, fontSize: "10px", letterSpacing: ".05em", textTransform: "uppercase", color: t.a }}>{n.source}</span>
                 )}
-                <span>{n.title}</span>
+                <span style={{ color: t.ts }}>{n.title}</span>
               </a>
             ) : (
-              <span style={{ opacity: 0.9 }}>{n.title}</span>
+              <span style={{ color: t.ts }}>{n.title}</span>
             )}
           </span>
         ))}
