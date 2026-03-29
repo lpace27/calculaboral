@@ -18,7 +18,7 @@ const NAV_LINKS = [
 
 function Ticker() {
   const { theme: t } = useTheme();
-  const [news, setNews] = useState(NEWS_FALLBACK);
+  const [news, setNews] = useState(NEWS_FALLBACK.map(n => ({ title: n, link: null })));
 
   useEffect(() => {
     const RSS_URL = "https://news.google.com/rss/search?q=when:7d+paritarias+OR+sueldos+OR+monotributo+OR+ganancias+OR+ARCA+OR+reforma+laboral+argentina+2026&hl=es-419&gl=AR&ceid=AR:es-419";
@@ -33,7 +33,10 @@ function Ticker() {
             return fecha > haceUnMes;
           })
           .slice(0, 8)
-          .map(item => item.title.replace(/ - .+$/, ""));
+          .map(item => ({
+            title: item.title.replace(/ - .+$/, ""),
+            link: item.link,
+          }));
         if (recientes.length >= 3) {
           setNews(recientes);
         }
@@ -41,10 +44,25 @@ function Ticker() {
     }).catch(() => {});
   }, []);
 
-  const text = news.concat(news).map(n => "  ●  " + n).join("");
+  const items = news.concat(news);
   return (
     <div style={{ background: t.tickBg, borderBottom: `1px solid ${t.tickBd}`, overflow: "hidden", height: "32px", display: "flex", alignItems: "center" }}>
-      <div style={{ whiteSpace: "nowrap", animation: "scroll 50s linear infinite", fontSize: "12px", color: t.tickTx }}>{text}</div>
+      <div style={{ whiteSpace: "nowrap", animation: "scroll 50s linear infinite", fontSize: "12px", color: t.tickTx, display: "flex", alignItems: "center" }}>
+        {items.map((n, i) => (
+          <span key={i} style={{ display: "inline-flex", alignItems: "center" }}>
+            <span style={{ margin: "0 10px", opacity: 0.5 }}>●</span>
+            {n.link ? (
+              <a href={n.link} target="_blank" rel="noopener noreferrer" style={{ color: t.tickTx, textDecoration: "none", transition: "opacity .2s" }}
+                onMouseEnter={e => e.target.style.opacity = "0.7"}
+                onMouseLeave={e => e.target.style.opacity = "1"}>
+                {n.title}
+              </a>
+            ) : (
+              <span>{n.title}</span>
+            )}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
